@@ -15,9 +15,9 @@ export default function Home() {
       transition={{ duration: 0.3 }}>
       <Header />
       <main className="mt-[56px] md:mt-[100px] flex flex-col w-full">
-        <div className="bg-[#E8EBF6] px-6 py-3 text-center text-sm text-[#27355D]">
-          <p><strong>Interactive showcase.</strong></p>
-          <p className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+        <div className="overflow-x-auto bg-[#E8EBF6] px-6 py-3 text-center text-sm text-[#27355D]">
+          <p className="flex w-max min-w-full items-center justify-center gap-x-3 whitespace-nowrap">
+            <strong>Interactive showcase.</strong>
             <span>Original source code:</span>
             <a href="https://github.com/JasonKeyiL/fursphere-mbti-offical/tree/main" target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-2 hover:text-[#5777D0]">Frontend (main)</a>
             <span aria-hidden="true">·</span>
