@@ -48,7 +48,7 @@ const Footer = () => {
               <Link href="/mbti">Questionnaire demo</Link>
             </div>
             <div className="flex flex-col items-start gap-[12px] text-[14px] md:text-[16px]">
-              <a href="https://github.com/chrischrischristianyijin/fursphere-mbti-offical" target="_blank" rel="noopener noreferrer">Source code</a>
+              <a href="https://github.com/JasonKeyiL/fursphere-mbti-offical/tree/main" target="_blank" rel="noopener noreferrer">Source code</a>
               <Link href="/#about">About FurSphere</Link>
             </div>
           </div>

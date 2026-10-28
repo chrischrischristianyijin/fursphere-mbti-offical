@@ -90,7 +90,7 @@ export default function PetMBTIFlow() {
   const Question = questions[step - 5];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className={`min-h-screen ${part1 || part2 ? 'bg-[#F5F5F5]' : 'bg-white'}`}>
       <Header />
       <main className="pt-[56px] md:pt-0">
         {!part1 && !part2 && step > 0 && <ProgressBar step={step} />}

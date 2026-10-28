@@ -19,7 +19,7 @@ export default function Home() {
           <p><strong>Interactive showcase.</strong></p>
           <p className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
             <span>Original source code:</span>
-            <a href="https://github.com/chrischrischristianyijin/fursphere-mbti-offical/tree/main" target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-2 hover:text-[#5777D0]">Frontend (main)</a>
+            <a href="https://github.com/JasonKeyiL/fursphere-mbti-offical/tree/main" target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-2 hover:text-[#5777D0]">Frontend (main)</a>
             <span aria-hidden="true">·</span>
             <a href="https://github.com/chrischrischristianyijin/fursphere-mbti-python-server-offical/tree/main" target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-2 hover:text-[#5777D0]">Backend (main)</a>
           </p>

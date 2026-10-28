@@ -139,16 +139,16 @@ const SocialSection = () => (
       alt="Discord"
     />
     <SocialButton
-      href="https://www.instagram.com/fursphere"
+      href="https://www.instagram.com/fur.sphere?igsh=MWowbXNjdHcxcmU5Mw=="
       icon="/fursphere-mbti-offical/instagram.svg"
       alt="Instagram"
       isWhiteBg={true}
       variant="light"
     />
     <SocialButton
-      href="https://www.facebook.com/fursphere"
-      icon="/fursphere-mbti-offical/facebook.svg"
-      alt="Facebook"
+      href="https://www.xiaohongshu.com/user/profile/67ac0cff000000000e01d218"
+      icon="/fursphere-mbti-offical/xiaohongshu.svg"
+      alt="Xiaohongshu"
       isWhiteBg={true}
       variant="light"
     />
