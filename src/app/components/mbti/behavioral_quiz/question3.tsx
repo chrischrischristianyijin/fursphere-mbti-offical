@@ -30,14 +30,14 @@ const getReactionText = (num: number): string => {
 
 const getReactionNumber = (text: string): number => {
   const reactionOptions = [
-    '100', 
-    '75', 
-    '50', 
-    '25', 
-    '0', 
-    '-25', 
-    '-50', 
-    '-75', 
+    '100',
+    '75',
+    '50',
+    '25',
+    '0',
+    '-25',
+    '-50',
+    '-75',
     '-100'
   ];
 
@@ -59,10 +59,11 @@ const Question3: React.FC<Question3Props> = ({
     getReactionNumber(surveyData.personality_and_behavior.Decision_Making.stranger_enter_territory) || 5
   );
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -75,12 +76,12 @@ const Question3: React.FC<Question3Props> = ({
   const handleNextPage9 = () => {
 
     if (surveyData.personality_and_behavior.Decision_Making.stranger_enter_territory !== '5' && surveyData.personality_and_behavior.Decision_Making.stranger_enter_territory !== '') {
-      handleNext(); 
-    } 
+      handleNext();
+    }
   };
 
   const getNextButtonColor = () => {
-    return surveyData.personality_and_behavior.Decision_Making.stranger_enter_territory !== '5' 
+    return surveyData.personality_and_behavior.Decision_Making.stranger_enter_territory !== '5'
     && surveyData.personality_and_behavior.Decision_Making.stranger_enter_territory !== ''
       ? '#5777D0' // Blue when not 5
       : '#C3C3C3'; // Gray when 5
@@ -90,7 +91,7 @@ const Question3: React.FC<Question3Props> = ({
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
-  
+
 
   return (
     <div className='relative mx-auto w-full max-w-[1440px]  h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] w-full flex justify-center'>
@@ -112,16 +113,19 @@ const Question3: React.FC<Question3Props> = ({
             const inSelectionRange = isLeft
               ? optionValue >= selectedValue && optionValue <= 5
               : optionValue <= selectedValue && optionValue >= 5;
-    
+
           // 🔥 设定中间 bubble 颜色
           const isMiddleSelected = selectedValue < 5 ? "#FFC542" : "#5777D0";
-    
+
           // 🔥 设定中间 bubble 的边框颜色
           const middleBorderColor = selectedValue < 5 ? "#FEF0C7" : "#D1D7EF";
 
           return (
             <div key={option} className="option-wrapper">
-              <div
+              <button
+                type="button"
+                aria-label={`Select rating ${option}`}
+                aria-pressed={String(selectedOption) === option}
                 className="option-circle"
                 onClick={() => handleSelectOption(option)}
                 style={{
@@ -149,7 +153,7 @@ const Question3: React.FC<Question3Props> = ({
             );
          })}
         </div>
-        
+
          {/* 标签行 */}
         <div className="label-row ">
           <span className="option-label text-[14px] text-[#717680]">👿Aggressive</span>
@@ -173,10 +177,11 @@ const Question3: React.FC<Question3Props> = ({
             mt-0
              `} >
         <div className="slider-wrapper">
-         
+
          <div className="slider-guide-line"></div>
           <input
             type="range"
+            aria-label="Pet behavior rating"
             min="1"
             max="9"
             value={selectedOption}
@@ -222,30 +227,30 @@ const Question3: React.FC<Question3Props> = ({
         </div>
       </div>
 
- 
+
       {/* Desktop 端的按钮 */}
       <div className="button-container desktop absolute top-[393px] left-0 right-0 w-[540px] mx-auto flex justify-between">
         <button className="nav-button previous" onClick={handleBack}>Previous</button>
-     
+
         <button className="nav-button next" style={{ background: getNextButtonColor() }} onClick={handleNextPage9}>Next</button>
       </div>
 
       {/* Mobile 端的按钮 */}
       <div className="button-container mobile absolute bottom-[48px] left-0 right-0 w-[320px] mx-auto flex justify-between">
-        <button className="nav-button mobile previous" onClick={handleBack}>
+        <button aria-label="Previous question" className="nav-button mobile previous" onClick={handleBack}>
           <svg className="inline md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">
             <path fillRule="evenodd" clipRule="evenodd" d="M2.45677 16.948L9.99943 24.4907L11.8848 22.6054L5.28477 16.0054L11.8848 9.40535L9.99943 7.52002L2.45677 15.0627C2.20681 15.3127 2.06638 15.6518 2.06638 16.0054C2.06638 16.3589 2.20681 16.698 2.45677 16.948Z" fill="white"/>
           </svg>
         </button>
-      
-        <button className="nav-button mobile next" style={{ background: getNextButtonColor() }} onClick={handleNextPage9}>
+
+        <button aria-label="Next question" className="nav-button mobile next" style={{ background: getNextButtonColor() }} onClick={handleNextPage9}>
           <svg className="inline md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">
           <path fillRule="evenodd" clipRule="evenodd" d="M13.5432 16.948L6.00057 24.4907L4.11523 22.6054L10.7152 16.0054L4.11523 9.40535L6.00057 7.52002L13.5432 15.0627C13.7932 15.3127 13.9336 15.6518 13.9336 16.0054C13.9336 16.3589 13.7932 16.698 13.5432 16.948Z" fill="white"/>
           </svg>
         </button>
       </div>
 
-      
+
 
 
       <style jsx>{`
@@ -279,13 +284,13 @@ const Question3: React.FC<Question3Props> = ({
           .question-container.mobile h2 {
           text-align: left !important;
           width: 100%;
-        }   
+        }
         }
 
         /* === 问题容器 === */
         .question-container.desktop {
           width: 540px; /* Fixed width */
-          margin: auto; 
+          margin: auto;
           text-align: center;
         }
 
@@ -325,12 +330,12 @@ const Question3: React.FC<Question3Props> = ({
           align-items: center;
           width: 100%;
           text-align: center;
-        
-          
+
+
 
         }
 
-      
+
 
 
         .slider {
@@ -356,8 +361,8 @@ const Question3: React.FC<Question3Props> = ({
           position: relative;
           width: 100%;
           z-index: 1;
-       
-       
+
+
         }
 
         /* 中间辅助线 */
@@ -371,7 +376,7 @@ const Question3: React.FC<Question3Props> = ({
           transform: translate(-50%, -50%);
           z-index: -1; /* 位于滑条背后 */
         }
-          
+
         /* === 滑块动态颜色 === */
         .slider[value="5"]::-webkit-slider-thumb {
           background: #5777d0;
@@ -414,6 +419,8 @@ const Question3: React.FC<Question3Props> = ({
         }
 
         .option-circle {
+          display: block;
+          padding: 0;
           border-radius: 50%;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -428,7 +435,7 @@ const Question3: React.FC<Question3Props> = ({
 
         /* === 按钮样式（桌面端） === */
         .button-container.desktop {
-      
+
         }
 
         .nav-button {
@@ -473,10 +480,10 @@ const Question3: React.FC<Question3Props> = ({
 
         /* === 按钮样式（移动端） === */
         .button-container.mobile {
-         
+
         }
 
-   
+
 
         .nav-button.mobile {
           width: 44px;
@@ -529,5 +536,5 @@ const Question3: React.FC<Question3Props> = ({
           </div>
           );
         };
-export default Question3; 
+export default Question3;
 

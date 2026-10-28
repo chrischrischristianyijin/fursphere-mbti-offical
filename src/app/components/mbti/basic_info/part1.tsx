@@ -1,10 +1,10 @@
-'use client'; 
+'use client';
 import React, { useEffect, useState } from 'react';
 import ProgressBar from '../ProgressBar';
 import Image from 'next/image';
 import { SurveyData } from '@/app/types/survey';
 interface Part1Props {
-    handleNext: () => void; 
+    handleNext: () => void;
     handleBack: () => void;
     surveyData: SurveyData;
     step: number;
@@ -19,7 +19,7 @@ interface Part1Props {
 
 
 const Part1: React.FC<Part1Props>  = ({ handleNext, handleBack, step, setStep, surveyData, updateAnswer, setPart1 }) => {
-  
+
   const handleNextClick = () => {
     setPart1(false);
     handleNext();
@@ -30,10 +30,10 @@ const Part1: React.FC<Part1Props>  = ({ handleNext, handleBack, step, setStep, s
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
-  
+
   return (
     <div className="h-[calc(100svh-56px)] mt-0 md:mt-[100px] bg-[#F5F5F5]">
-      
+
       <div className="flex flex-col  mx-auto max-w-[1440px] max-h-[531px] md:max-h-[461px] items-center h-full ">
         <label className="
                   mt-[40px]
@@ -65,8 +65,8 @@ const Part1: React.FC<Part1Props>  = ({ handleNext, handleBack, step, setStep, s
         </label>
 
         <Image
-          src="/cat_dog.svg"
-          alt="pet" 
+          src="/fursphere-mbti-offical/cat_dog.svg"
+          alt="pet"
           width={320}
           height={320}
           className="w-[320px] h-[320px]  mt-[8px] md:mt-[-33px]"
@@ -84,30 +84,30 @@ const Part1: React.FC<Part1Props>  = ({ handleNext, handleBack, step, setStep, s
         </label>
         </div>
         <div className="flex flex-col items-center">
-          <button 
+          <button
             className="
             mx-auto flex flex-row items-center justify-center
             absolute bottom-[48px]
             w-[150px] h-[44px]
             rounded-[22px]
-            bg-[#5777D0] 
+            bg-[#5777D0]
             text-[16px]
             text-white"
             onClick={handleNextClick}
             >
               Let’s go
-              <svg 
-                className="ml-2" 
-                width="16" 
-                height="32" 
-                viewBox="0 0 16 32" 
-                fill="none" 
+              <svg
+                className="ml-2"
+                width="16"
+                height="32"
+                viewBox="0 0 16 32"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path 
-                  fillRule="evenodd" 
-                  clipRule="evenodd" 
-                  d="M13.5432 16.948L6.00057 24.4907L4.11523 22.6054L10.7152 16.0054L4.11523 9.40535L6.00057 7.52002L13.5432 15.0627C13.7932 15.3127 13.9336 15.6518 13.9336 16.0054C13.9336 16.3589 13.7932 16.698 13.5432 16.948Z" 
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M13.5432 16.948L6.00057 24.4907L4.11523 22.6054L10.7152 16.0054L4.11523 9.40535L6.00057 7.52002L13.5432 15.0627C13.7932 15.3127 13.9336 15.6518 13.9336 16.0054C13.9336 16.3589 13.7932 16.698 13.5432 16.948Z"
                   fill="currentColor"
                 />
               </svg>
@@ -115,9 +115,9 @@ const Part1: React.FC<Part1Props>  = ({ handleNext, handleBack, step, setStep, s
         </div>
 
       </div>
-      
 
- 
+
+
   );
 };
 

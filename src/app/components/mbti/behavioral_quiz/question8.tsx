@@ -33,14 +33,14 @@ const getReactionText = (num: number): string => {
 
 const getReactionNumber = (text: string): number => {
   const reactionOptions = [
-    '100', 
-    '75', 
-    '50', 
-    '25', 
-    '0', 
-    '-25', 
-    '-50', 
-    '-75', 
+    '100',
+    '75',
+    '50',
+    '25',
+    '0',
+    '-25',
+    '-50',
+    '-75',
     '-100'
   ];
 
@@ -69,10 +69,11 @@ const Question8: React.FC<Question8Props> = ({
     getReactionNumber(surveyData.personality_and_behavior.Structure_Spontaneity.toy_out_of_reach) || 5
   );
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -84,14 +85,14 @@ const Question8: React.FC<Question8Props> = ({
 
 
   const handleNextPage14 = () => {
-    
+
     if (surveyData.personality_and_behavior.Structure_Spontaneity.toy_out_of_reach !== '5' && surveyData.personality_and_behavior.Structure_Spontaneity.toy_out_of_reach !== '') {
-      handleNext(); 
-    } 
+      handleNext();
+    }
   };
 
   const getNextButtonColor = () => {
-    return surveyData.personality_and_behavior.Structure_Spontaneity.toy_out_of_reach !== '5' 
+    return surveyData.personality_and_behavior.Structure_Spontaneity.toy_out_of_reach !== '5'
     && surveyData.personality_and_behavior.Structure_Spontaneity.toy_out_of_reach !== ''
       ? '#5777D0' // Blue when not 5
       : '#C3C3C3'; // Gray when 5
@@ -118,15 +119,15 @@ const Question8: React.FC<Question8Props> = ({
 {showBanner2 && (
 
 <div className="mx-auto h-[100px] md:h-[80px] w-full bg-[#FEF0C7] flex items-center justify-center">
-  
+
   <div className=" mx-auto w-[320px] md:w-[540px] flex flex-row items-center justify-between ">
-    
+
     <div className="flex flex-col max-w-[289px] md:max-w-[450px] gap-[10px]">
       <span className="max-w-[289px] md:max-w-[450px] text-[14px] text-[#717680] leading-[16.94px]">
       More information can helps us generate a more accurate MBTI result for your pet. But if you are getting tired, here’s the
       </span>
       <a
-        href="#sample" 
+        href="#sample"
         className=" text-[14px] text-[#5777D0] underline hover:opacity-80 leading-[16.94px]"
         onClick={handleFinalStep}
       >
@@ -173,16 +174,19 @@ const Question8: React.FC<Question8Props> = ({
             const inSelectionRange = isLeft
               ? optionValue >= selectedValue && optionValue <= 5
               : optionValue <= selectedValue && optionValue >= 5;
-    
+
           // 🔥 设定中间 bubble 颜色
           const isMiddleSelected = selectedValue < 5 ? "#FFC542" : "#5777D0";
-    
+
           // 🔥 设定中间 bubble 的边框颜色
           const middleBorderColor = selectedValue < 5 ? "#FEF0C7" : "#D1D7EF";
 
           return (
             <div key={option} className="option-wrapper">
-              <div
+              <button
+                type="button"
+                aria-label={`Select rating ${option}`}
+                aria-pressed={String(selectedOption) === option}
                 className="option-circle"
                 onClick={() => handleSelectOption(option)}
                 style={{
@@ -210,7 +214,7 @@ const Question8: React.FC<Question8Props> = ({
             );
          })}
         </div>
-        
+
          {/* 标签行 */}
         <div className="label-row ">
           <span className="option-label text-[14px] text-[#717680]">🤔Keep trying</span>
@@ -234,10 +238,11 @@ const Question8: React.FC<Question8Props> = ({
             mt-0
              `} >
         <div className="slider-wrapper">
-         
+
          <div className="slider-guide-line"></div>
           <input
             type="range"
+            aria-label="Pet behavior rating"
             min="1"
             max="9"
             value={selectedOption}
@@ -283,7 +288,7 @@ const Question8: React.FC<Question8Props> = ({
         </div>
       </div>
 
- 
+
       {/* Desktop 端的按钮 */}
       <div className="button-container desktop absolute top-[393px] left-0 right-0 w-[540px] mx-auto flex justify-between">
         <button className="nav-button previous" onClick={handleBack}>Previous</button>
@@ -293,20 +298,20 @@ const Question8: React.FC<Question8Props> = ({
 
       {/* Mobile 端的按钮 */}
       <div className="button-container mobile absolute bottom-[48px] left-0 right-0 w-[320px] mx-auto flex justify-between">
-        <button className="nav-button mobile previous" onClick={handleBack}>
+        <button aria-label="Previous question" className="nav-button mobile previous" onClick={handleBack}>
           <svg className="inline md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">
             <path fillRule="evenodd" clipRule="evenodd" d="M2.45677 16.948L9.99943 24.4907L11.8848 22.6054L5.28477 16.0054L11.8848 9.40535L9.99943 7.52002L2.45677 15.0627C2.20681 15.3127 2.06638 15.6518 2.06638 16.0054C2.06638 16.3589 2.20681 16.698 2.45677 16.948Z" fill="white"/>
           </svg>
         </button>
         <button className="nav-button mobile skip" onClick={handleSkip}>Skip</button>
-        <button className="nav-button mobile next" onClick={handleNextPage14} style={{ background: getNextButtonColor() }}>
+        <button aria-label="Next question" className="nav-button mobile next" onClick={handleNextPage14} style={{ background: getNextButtonColor() }}>
           <svg className="inline md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">
           <path fillRule="evenodd" clipRule="evenodd" d="M13.5432 16.948L6.00057 24.4907L4.11523 22.6054L10.7152 16.0054L4.11523 9.40535L6.00057 7.52002L13.5432 15.0627C13.7932 15.3127 13.9336 15.6518 13.9336 16.0054C13.9336 16.3589 13.7932 16.698 13.5432 16.948Z" fill="white"/>
           </svg>
         </button>
       </div>
 
-      
+
 
 
       <style jsx>{`
@@ -340,13 +345,13 @@ const Question8: React.FC<Question8Props> = ({
           .question-container.mobile h2 {
           text-align: left !important;
           width: 100%;
-        }   
+        }
         }
 
         /* === 问题容器 === */
         .question-container.desktop {
           width: 540px; /* Fixed width */
-          margin: auto; 
+          margin: auto;
           text-align: center;
         }
 
@@ -386,12 +391,12 @@ const Question8: React.FC<Question8Props> = ({
           align-items: center;
           width: 100%;
           text-align: center;
-        
-          
+
+
 
         }
 
-      
+
 
 
         .slider {
@@ -417,8 +422,8 @@ const Question8: React.FC<Question8Props> = ({
           position: relative;
           width: 100%;
           z-index: 1;
-       
-       
+
+
         }
 
         /* 中间辅助线 */
@@ -432,7 +437,7 @@ const Question8: React.FC<Question8Props> = ({
           transform: translate(-50%, -50%);
           z-index: -1; /* 位于滑条背后 */
         }
-          
+
         /* === 滑块动态颜色 === */
         .slider[value="5"]::-webkit-slider-thumb {
           background: #5777d0;
@@ -475,6 +480,8 @@ const Question8: React.FC<Question8Props> = ({
         }
 
         .option-circle {
+          display: block;
+          padding: 0;
           border-radius: 50%;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -489,7 +496,7 @@ const Question8: React.FC<Question8Props> = ({
 
         /* === 按钮样式（桌面端） === */
         .button-container.desktop {
-      
+
         }
 
         .nav-button {
@@ -534,10 +541,10 @@ const Question8: React.FC<Question8Props> = ({
 
         /* === 按钮样式（移动端） === */
         .button-container.mobile {
-         
+
         }
 
-   
+
 
         .nav-button.mobile {
           width: 44px;
@@ -586,9 +593,9 @@ const Question8: React.FC<Question8Props> = ({
           }
         }
       `}</style>
-            </div>  
+            </div>
           </div>
           );
         };
-export default Question8; 
+export default Question8;
 

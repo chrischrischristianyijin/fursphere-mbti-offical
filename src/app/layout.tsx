@@ -1,62 +1,10 @@
-import type { Metadata } from "next";
-
-
-import { Toaster } from 'react-hot-toast';
-
-import "./globals.css";
-import { LogginProvider } from "./context/LogginContext";
-import { ProgressProvider } from "./context/ProgressContext";
-import { Inter, Ubuntu, Poppins, Baloo_2 } from 'next/font/google'
-import Header from "./components/header";
-
-const ubuntu = Ubuntu({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-ubuntu',
-})
-const poppins = Poppins({
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-poppins',
-})
-
-const baloo2 = Baloo_2({
-  weight: ['400', '500', '600', '700', '800'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-baloo2',
-})
-
-const inter = Inter({ subsets: ["latin"] ,variable: '--font-inter',});
-
+import type { Metadata } from 'next';
+import './globals.css';
 export const metadata: Metadata = {
-  title: "Fursphere",
-  description: "fursphere - The ultimate pet platform",
-  icons: {
-    icon: "/icon.png", // 你的 Favicon 图标路径
-    shortcut: "/icon.png",
-    apple: "/icon.png", // 适用于 iOS
-  },
+  title: 'FurSphere — Pet Personality Showcase',
+  description: 'Explore FurSphere’s original pet-care concept and interactive pet personality questionnaire. A showcase without live AI generation or accounts.',
+  icons: { icon: '/fursphere-mbti-offical/favicon.ico' },
 };
-
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className={`${ubuntu.variable} ${poppins.variable} ${baloo2.variable} ${ubuntu.className}`}>
-      <body className={inter.className}>
-      <LogginProvider>
-        <ProgressProvider>
-          {children}
-          <Toaster />
-        </ProgressProvider>
-      </LogginProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en"><body style={{ fontFamily: 'Inter, sans-serif' }}>{children}</body></html>;
 }

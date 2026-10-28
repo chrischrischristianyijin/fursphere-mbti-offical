@@ -1,20 +1,9 @@
-interface DiscoverButtonProps {
-  onClick: () => void;
-  darkMode?: boolean;
-}
+import Link from 'next/link';
 
-const DiscoverButton = ({ onClick, darkMode = false }: DiscoverButtonProps) => {
+export default function DiscoverButton() {
   return (
-    <button 
-      onClick={onClick}
-      className={`button w-[171px] h-[44px] ${darkMode ? 'bg-[#27355D]' : 'bg-[#5777D0]'} 
-      rounded-[22px] overflow-hidden 
-      flex flex-row items-center justify-center 
-      box-border`}
-    >
-      <div className="font-semibold text-[16px] text-white">Discover Now</div>
-    </button>
+    <Link href="/mbti" className="button w-[171px] h-[44px] bg-[#5777D0] rounded-[22px] overflow-hidden flex items-center justify-center box-border">
+      <span className="font-semibold text-[16px] text-white">Explore the quiz</span>
+    </Link>
   );
-};
-
-export default DiscoverButton; 
+}

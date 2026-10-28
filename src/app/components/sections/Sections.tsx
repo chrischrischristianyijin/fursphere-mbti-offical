@@ -1,24 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
-import Link from "next/link";
 import DiscoverButton from '../common/DiscoverButton';
 import SignupButton from '../common/SignupButton';
-// Section1-5的基础容器样式
-const sectionBaseStyles = "flex flex-col md:flex-row items-center justify-between max-w-[1440px] w-full min-h-[640px] mx-auto px-4 md:px-8 lg:px-20 py-10 md:py-16";
 
 
 // Section1.5 组件
 const Section1_2: React.FC = () => {
-  
+
 
   return (
-    <div className='mt-[40px] md:mt-[80px] bg-[#F8F7F8]'>
+    <div id="product" className='scroll-mt-[110px] mt-[40px] md:mt-[80px] bg-[#F8F7F8]'>
     <section className=" max-w-[1240px] h-[384px] mx-auto  ">
-      
+
       <div className="
       flex flex-col
       mt-[40px] md:mt-[60px]
-      items-center 
+      items-center
       w-full
       h-[325px] md:h-[162px]
       gap-y-[20px]">
@@ -26,34 +23,31 @@ const Section1_2: React.FC = () => {
         w-full
         text-[32px] md:text-[48px]
         text-center
-        font-UbuntuLight 
-        text-[#505D90] 
-        leading-[38.4px] md:leading-[57.6px] 
+        font-UbuntuLight
+        text-[#505D90]
+        leading-[38.4px] md:leading-[57.6px]
         tracking-[-1.2px] md:tracking-[-1.92px]">
-          Fluffy mastermind or daydreaming artist? 
+          Fluffy mastermind or daydreaming artist?
          </h1>
          <h2 className="
         w-full
         text-[16px] md:text-[16px]
         text-center
         font-[Inter]
-        text-[#505D90] 
+        text-[#505D90]
         leading-normal">
-          Discover your pet’s MBTI personality!
+          Explore the original pet personality questionnaire.
          </h2>
          <div className="
          w-full
          flex flex-row items-center justify-center
          ">
-         <DiscoverButton onClick={() => {
-           // Add your click handler logic here
-           console.log('Discover clicked');
-         }}/>
+         <DiscoverButton />
          </div>
 
          <div className=" max-w-[768px] max-h-[143px]">
          <Image
-          src="/page1_2.svg"
+          src="/fursphere-mbti-offical/page1_2.svg"
           alt="Fursphere Logo"
           width={768}
           height={143}
@@ -62,13 +56,13 @@ const Section1_2: React.FC = () => {
          </div>
 
 
-         
-       
+
+
       </div>
 
-       
-        
-      
+
+
+
     </section>
     </div>
   );
@@ -87,33 +81,30 @@ const Section2: React.FC = () => {
       <div className="  w-full  flex flex-col md:flex-row items-center justify-between">
         {/* Left Content */}
         <div className=" mt-[40px] md:mt-[0px]  md:max-w-[620px] flex flex-col items-center md:items-start gap-y-[20px] md:gap-y-[32px]">
-          <h1 className="text-[24px] md:text-[32px] text-[#505D90] text-center md:text-left font-Ubuntu 
-          tracking-[-0.96px] md:tracking-[-1.28px] 
+          <h1 className="text-[24px] md:text-[32px] text-[#505D90] text-center md:text-left font-Ubuntu
+          tracking-[-0.96px] md:tracking-[-1.28px]
           leading-[28.8px] md:leading-[38.4px]">
             Compare prices across
-            <span className="text-[#5777D0]"> 10+ </span> 
+            <span className="text-[#5777D0]"> 10+ </span>
             stores best <br />
-            pet supplies. 
+            pet supplies.
           </h1>
-          
+
           <div className="
-          w-full 
+          w-full
           h-full
           text-[16px]
           flex flex-row items-center justify-center
            ">
-          <SignupButton 
+          <SignupButton
             className="
-            w-[123px]
+            w-[164px]
             h-[44px]"
-            onClick={() => {
-            // Add your click handler logic here
-            console.log('Signup clicked');
-          }}/>
+          />
           </div>
 
         </div>
-      
+
         {/* Right Content - Video */}
         <div className=" w-full md:w-1/2">
           <div className=" w-full h-full">
@@ -124,10 +115,10 @@ const Section2: React.FC = () => {
             loop
             muted
             playsInline
-            select-none="true" 
-            
+            select-none="true"
+
           >
-            <source src="/video/page1.mp4" type="video/mp4" />
+            <source src="/fursphere-mbti-offical/video/page1.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
@@ -150,33 +141,30 @@ const Section3: React.FC = () => {
       <div className=" w-full  flex flex-col md:flex-row items-center justify-between">
         {/* Left Content */}
         <div className="mt-[40px] md:mt-[0px] md:max-w-[620px]  flex flex-col items-center md:items-start gap-y-[20px] md:gap-y-[32px]">
-          <h1 className="text-[24px] md:text-[32px] text-[#505D90] text-center md:text-left font-Ubuntu 
-          tracking-[-0.96px] md:tracking-[-1.28px] 
+          <h1 className="text-[24px] md:text-[32px] text-[#505D90] text-center md:text-left font-Ubuntu
+          tracking-[-0.96px] md:tracking-[-1.28px]
           leading-[28.8px] md:leading-[38.4px]">
             <span>Help you know </span>
             <b className="text-[#5777D0]">everything </b>
             <span> about your <br/>
             pet, even when not at home.</span>
           </h1>
-          
+
           <div className="
-          w-full 
+          w-full
           h-full
           text-[16px]
           flex flex-row items-center justify-center
            ">
-          <SignupButton 
+          <SignupButton
             className="
-            w-[123px]
+            w-[164px]
             h-[44px]"
-            onClick={() => {
-            // Add your click handler logic here
-            console.log('Signup clicked');
-          }}/>
+          />
           </div>
 
         </div>
-      
+
         {/* Right Content - Video */}
         <div className="  w-full md:w-1/2">
           <div className=" w-full h-full">
@@ -187,9 +175,9 @@ const Section3: React.FC = () => {
             loop
             muted
             playsInline
-            select-none="true" 
+            select-none="true"
           >
-            <source src="/video/page2.mp4" type="video/mp4" />
+            <source src="/fursphere-mbti-offical/video/page2.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
@@ -211,33 +199,30 @@ const Section4: React.FC = () => {
       <div className=" w-full  flex flex-col md:flex-row items-center justify-between">
         {/* Left Content */}
         <div className="mt-[40px] md:mt-[0px] md:max-w-[620px] flex flex-col items-center md:items-start gap-y-[20px] md:gap-y-[32px]">
-          <h1 className="text-[24px] md:text-[32px] text-[#505D90] text-center md:text-left font-Ubuntu 
-          tracking-[-0.96px] md:tracking-[-1.28px] 
+          <h1 className="text-[24px] md:text-[32px] text-[#505D90] text-center md:text-left font-Ubuntu
+          tracking-[-0.96px] md:tracking-[-1.28px]
           leading-[28.8px] md:leading-[38.4px]">
             <span>Convert medical records into </span>
             <b className="text-[#5777D0]">pet <br/> parent-friendly </b>
             <span> terms for easier <br/>
             understanding.</span>
           </h1>
-          
+
           <div className="
-          w-full 
+          w-full
           h-full
           text-[16px]
           flex flex-row items-center justify-center
            ">
-          <SignupButton 
+          <SignupButton
             className="
-            w-[123px]
+            w-[164px]
             h-[44px]"
-            onClick={() => {
-            // Add your click handler logic here
-            console.log('Signup clicked');
-          }}/>
+          />
           </div>
 
         </div>
-      
+
         {/* Right Content - Video */}
         <div className=" w-full md:w-1/2">
           <div className=" w-full h-full">
@@ -248,9 +233,9 @@ const Section4: React.FC = () => {
             loop
             muted
             playsInline
-            select-none="true" 
+            select-none="true"
           >
-            <source src="/video/page3.mp4" type="video/mp4" />
+            <source src="/fursphere-mbti-offical/video/page3.mp4" type="video/mp4" />
             </video>
           </div>
         </div>

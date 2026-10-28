@@ -25,9 +25,10 @@ interface SpecieBreedProps {
 
 const SpecieBreed: React.FC<SpecieBreedProps> = ({ handleNext, handleBack, step, setStep, surveyData, updateAnswer }): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState(surveyData.pet_info.PetSpecies || '');
   const [isOpen2, setIsOpen2] = useState(false);
-  const [selected2, setSelected2] = useState('');
+  const [selected2, setSelected2] = useState(surveyData.pet_info.PetBreed || '');
+  const previousSpecies = useRef(surveyData.pet_info.PetSpecies || '');
   const PetSpecies: string[] =  [
     'Dog', 'Cat', 'Others'
   ];
@@ -232,7 +233,11 @@ const SpecieBreed: React.FC<SpecieBreedProps> = ({ handleNext, handleBack, step,
   const PetBreed = getPetBreed(selected);
 
   useEffect(() => {
-    setSelected2('');
+    if (previousSpecies.current !== selected) {
+      previousSpecies.current = selected;
+      setSelected2('');
+      updateAnswer('pet_info', null, 'PetBreed', '');
+    }
   }, [selected]);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);

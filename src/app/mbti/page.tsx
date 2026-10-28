@@ -1,63 +1,36 @@
 "use client";
-
-import ProgressBar from '../components/mbti/ProgressBar';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import Header from '../components/header';
-import StartScreen from '../components/mbti/basic_info/startscreen'
+import ProgressBar from '../components/mbti/ProgressBar';
+import StartScreen from '../components/mbti/basic_info/startscreen';
 import Part1 from '../components/mbti/basic_info/part1';
-import SpecieBreed from '../components/mbti/basic_info/specie_breed'
+import SpecieBreed from '../components/mbti/basic_info/specie_breed';
 import Gender from '../components/mbti/basic_info/gender';
 import Age from '../components/mbti/basic_info/age';
 import NamePhoto from '../components/mbti/basic_info/name_photo';
 import Part2 from '../components/mbti/behavioral_quiz/part2';
-import Result1 from '../components/mbti/result/result1';
-import Result2 from '../components/mbti/result/result2';
-import Result3 from '../components/mbti/result/result3';
-import { motion, AnimatePresence } from 'framer-motion';
 import { SurveyData } from '../types/survey';
-import {useLoggin} from '../context/LogginContext'
-import DownloadPage1 from '../components/mbti/downloads/downloadpage1';
-import Breakdown from '../components/mbti/downloads/breakdown-m';
-import Loading from '../components/mbti/loading/loading';
-import MobileHeader from '../components/mbti/mobile-header';
-import Download from '../components/mbti/downloads/download';
-import UserProfile from '../components/user-profile';
-import Email from '../components/mbti/loggin_signup/email';
-import Signup from '../components/mbti/loggin_signup/signup';
-import Loggin from '../components/mbti/loggin_signup/loggin';
+import Question1 from '../components/mbti/behavioral_quiz/question1';
+import Question2 from '../components/mbti/behavioral_quiz/question2';
+import Question3 from '../components/mbti/behavioral_quiz/question3';
+import Question4 from '../components/mbti/behavioral_quiz/question4';
+import Question5 from '../components/mbti/behavioral_quiz/question5';
+import Question6 from '../components/mbti/behavioral_quiz/question6';
+import Question7 from '../components/mbti/behavioral_quiz/question7';
+import Question8 from '../components/mbti/behavioral_quiz/question8';
+import Question9 from '../components/mbti/behavioral_quiz/question9';
+import Question10 from '../components/mbti/behavioral_quiz/question10';
+import Question11 from '../components/mbti/behavioral_quiz/question11';
+import Question12 from '../components/mbti/behavioral_quiz/question12';
 
+const questions: React.ComponentType<any>[] = [Question1, Question2, Question3, Question4, Question5, Question6, Question7, Question8, Question9, Question10, Question11, Question12];
+const basicPages = [StartScreen, SpecieBreed, Gender, Age, NamePhoto];
 
-const PetMBTIFlow = () => {
-
-
-  const { loggin, setLoggin } = useLoggin();
-  const initialStep = 0; 
-  const [step, setStep] = useState(initialStep);
-
-  useEffect(() => {
-
-
-    const handlePopState = (event: PopStateEvent) => {
-      if (event.state?.step !== undefined) {
-        setStep(event.state.step);
-      } else {
-        setStep((prev) => Math.max(prev - 1, 0));
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  useEffect(() => {
-    // step 改变时，更新 URL 和 localStorage
-    window.history.replaceState({ step }, '', `?step=${step}`);
-    localStorage.setItem('currentStep', step.toString());
-  }, [step]);
-
-
-
-
+export default function PetMBTIFlow() {
+  const [step, setStep] = useState(0);
+  const [part1, setPart1] = useState(false);
+  const [part2, setPart2] = useState(false);
   const [surveyData, setSurveyData] = useState<SurveyData>({
     user_info: {
       name: '',
@@ -88,12 +61,12 @@ const PetMBTIFlow = () => {
       Routin_Curiosity: {
         interact_with_toys: '',
         fur_care_7days: '',
-        react_new_environment: '',   
+        react_new_environment: '',
       },
       Decision_Making: {
         stranger_enter_territory: '',
         react_when_sad: '',
-        respond_to_scold: '',   
+        respond_to_scold: '',
       },
       Structure_Spontaneity: {
         prefer_routine: '',
@@ -102,542 +75,42 @@ const PetMBTIFlow = () => {
       },
     }
   });
+  const updateAnswer = (category: keyof SurveyData, subCategory: any, field: string, value: string | File) => {
+    setSurveyData(previous => {
+      const section = previous[category] as Record<string, any>;
+      return { ...previous, [category]: subCategory
+        ? { ...section, [subCategory]: { ...section[subCategory], [field]: value } }
+        : { ...section, [field]: value } };
+    });
+  };
+  const handleNext = () => { setStep(value => Math.min(value + 1, 17)); window.scrollTo(0, 0); };
+  const handleBack = () => { setStep(value => Math.max(value - 1, 0)); window.scrollTo(0, 0); };
+  const shared = { step, setStep, surveyData, updateAnswer, handleNext, handleBack, handleSkip: handleNext, part1, setPart1, setPart2 };
+  const BasicPage = basicPages[step];
+  const Question = questions[step - 5];
 
-
-  const updateAnswer = <
-  T extends keyof typeof surveyData,
-  K extends keyof typeof surveyData[T]
-    >(
-      category: T,
-      subCategory: K | null,
-      field: keyof typeof surveyData[T] | string,
-      value: string | File
-    ) => {
-      setSurveyData(prev => ({
-        ...prev,
-        [category]: subCategory
-          ? {
-              ...prev[category],
-              [subCategory]: {
-                ...prev[category][subCategory as keyof typeof surveyData[T]],
-                [field]: value
-              }
-            }
-          : {
-              ...prev[category],
-              [field]: value
-            }
-      }));
-      console.log(surveyData);
-};
-
-const handleNext = () => {
-  const nextStep = step + 1;
-  window.history.pushState({ step: nextStep }, '', `?step=${nextStep}`);
-  setStep(nextStep);
-};
-const handleSkip = () => {
-  const nextStep = step + 1;
-  window.history.pushState({ step: nextStep }, '', `?step=${nextStep}`);
-  setStep(nextStep);
-};
-
-const handleBack = () => {
-  const lastStep = step - 1;
-  window.history.pushState({ step: lastStep }, '', `?step=${lastStep}`);
-  setStep(lastStep);
-};
-
-
-
-const [part1, setPart1] = useState(false);
-const [part2, setPart2] = useState(false) ;
-const [result1, setResult1] = useState(false);
-const [result2, setResult2] = useState(false);
-const [result3, setResult3] = useState(false);
-
-const [downloadPage1, setDownloadPage1] = useState(false);
-const [downloadPage2, setDownloadPage2] = useState(false);
-const [downloadPage3, setDownloadPage3] = useState(false);
-const [downloadPage4, setDownloadPage4] = useState(false);
-const [downloadPage5, setDownloadPage5] = useState(false);
-
-// const [isLoading, setIsLoading] = useState(false);
-const [aiResult, setAiResult] = useState('');
-const [showBanner2, setShowBanner2] = useState(true);
-
-const [showEmail, setShowEmail] = useState(false);
-const [showSignup, setShowSignup] = useState(false);
-const [showLogin, setShowLogin] = useState(false);
-const [isLoading, setIsLoading] = useState(false);
-
-const [download, setDownload] = useState(false);
-
-const [showUserProfile, setShowUserProfile] = useState(false);
-
-const { userInfo, setUserInfo } = useLoggin();
-
-const [isFromUserProfile, setIsFromUserProfile] = useState(false);
-
-console.log('showUserProfile',showUserProfile);
-console.log('step',step);
-console.log('part1',part1);
-console.log('part2',part2);
-console.log('result1',result1);
-console.log('result2',result2);
-console.log('result3',result3);
-
-const basicInfoPages = [
-  {
-    step: 0,
-    key: "startScreen",
-    Component: StartScreen,
-
-  },
-  {
-    step: 1,
-    key: "specieBreed",
-    Component: SpecieBreed
-  },
-  {
-    step: 2,
-    key: "gender",
-    Component: Gender
-  },
-  {
-    step: 3,
-    key: "age",
-    Component: Age
-  },
-  {
-    step: 4,
-    key: "namePhoto",
-    Component: NamePhoto
-  }
-];
-
-useEffect(() => {
-  console.log('Parent isLoading changed:', isLoading);
-}, [isLoading]);
-  
-return (
-
-<>
-  {showEmail && (
-  
-    <Email 
-      showEmail={showEmail}
-      showSignup={showSignup}
-      showLogin={showLogin}
-      setPart1={setPart1}
-      result1={result1}
-      result2={result2}
-      result3={result3}
-      setResult1={setResult1}
-      setResult2={setResult2}
-      setResult3={setResult3}
-      step={step}
-      setStep={setStep} 
-      handleNext={handleNext} 
-      setShowSignup={setShowSignup}
-      setShowLogin={setShowLogin}
-      setShowEmail={setShowEmail}
-      surveyData={surveyData}
-      aiResult={aiResult}
-      setAiResult={setAiResult}
-      setIsLoading={setIsLoading}
-      isLoading={isLoading}
-      download={download}
-      setDownload={setDownload}
-      setUserInfo={setUserInfo}
-      updateAnswer={updateAnswer}
-      setIsFromUserProfile={setIsFromUserProfile}
-      isFromUserProfile={isFromUserProfile}
-      setPart2={setPart2}
-    />
-
-   )}
-
- {showSignup && (
-      <Signup 
-        showEmail={showEmail}
-        showSignup={showSignup}
-        showLogin={showLogin}
-        setPart1={setPart1}
-        result1={result1}
-        result2={result2}
-        result3={result3}
-        setResult1={setResult1}
-        setResult2={setResult2}
-        setResult3={setResult3}
-        step={step}
-        setStep={setStep} 
-        handleNext={handleNext} 
-        setShowSignup={setShowSignup}
-        setShowLogin={setShowLogin}
-        setShowEmail={setShowEmail}
-        loading={isLoading}
-        download={download}
-        setLoading={setIsLoading}
-        setDownload={setDownload}
-        setAiResult={setAiResult}
-        aiResult={aiResult}
-        surveyData={surveyData}
-        setSurveyData={setSurveyData}
-        setIsFromUserProfile={setIsFromUserProfile}
-        isFromUserProfile={isFromUserProfile}
-        updateAnswer={updateAnswer}
-        setPart2={setPart2}
-      />
-    )}
-
-    {showLogin && (
-      <Loggin
-        showEmail={showEmail}
-        showSignup={showSignup}
-        showLogin={showLogin}
-        setPart1={setPart1}
-        result1={result1}
-        result2={result2}
-        result3={result3}
-        setResult1={setResult1}
-        setResult2={setResult2}
-        setResult3={setResult3}
-        step={step}
-        setStep={setStep} 
-        handleNext={handleNext} 
-        setShowSignup={setShowSignup}
-        setShowLogin={setShowLogin}
-        setShowEmail={setShowEmail}
-        loading={isLoading}
-        download={download}
-        setLoading={setIsLoading}
-        setDownload={setDownload}
-        setAiResult={setAiResult}
-        aiResult={aiResult}
-        surveyData={surveyData}
-        updateAnswer={updateAnswer}
-        setIsFromUserProfile={setIsFromUserProfile}
-        isFromUserProfile={isFromUserProfile}
-        setPart2={setPart2}
-      />
-    )}
-
-   {isLoading && (
-        <Loading 
-        step={step}
-        setStep={setStep}
-        setPart1={setPart1}
-        result1={result1}
-        result2={result2}
-        result3={result3}
-        setResult1={setResult1}
-        setResult2={setResult2}
-        setResult3={setResult3}
-        showEmail={showEmail}
-        showSignup={showSignup}
-        showLogin={showLogin}
-        loading={isLoading}
-        download={download}
-        setShowEmail={setShowEmail}
-        setShowSignup={setShowSignup}
-        setShowLogin={setShowLogin}
-        setLoading={setIsLoading}
-        setDownload={setDownload}
-        setIsFromUserProfile={setIsFromUserProfile}
-        isFromUserProfile={isFromUserProfile}
-        setPart2={setPart2}
-        />
-    )} 
-
-
-   {!showEmail && !showSignup && !showLogin && !isLoading && (
-    <div className="w-full h-[100svh] flex bg-white flex-col">
-      {/* <EmailTest /> */}
-    {/* mobile header */}
-    <div className={`${(step === 0 && part1 === false) ? 'hidden' : 'block md:hidden'}`}>
-      {(showUserProfile === false) && (
-      <MobileHeader 
-      step={step} 
-      setStep={setStep} 
-      setPart1={setPart1}
-      setResult1={setResult1}
-      setResult2={setResult2}
-      setResult3={setResult3}
-      result1={result1}
-      result2={result2}
-      result3={result3}
-      showEmail={showEmail}
-      showSignup={showSignup}
-      showLogin={showLogin}
-      loading={isLoading}
-      download={download}
-      setShowEmail={setShowEmail}
-      setShowSignup={setShowSignup}
-      setShowLogin={setShowLogin}
-      setLoading={setIsLoading}
-      setDownload={setDownload}
-      setIsFromUserProfile={setIsFromUserProfile}
-      isFromUserProfile={isFromUserProfile}
-      setPart2={setPart2}
-      />
-      )}
- 
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main className="pt-[56px] md:pt-0">
+        {!part1 && !part2 && step > 0 && <ProgressBar step={step} />}
+        {part1 ? <Part1 {...shared} /> : part2 ? <Part2 {...shared} /> : step <= 4 ? (
+          <BasicPage {...shared} />
+        ) : step <= 16 ? (
+          <Question key={step} {...shared} />
+        ) : (
+          <section className="mx-auto max-w-[720px] px-6 py-16 text-center text-[#27355D]">
+            <span className="rounded-full bg-[#EEF1FA] px-4 py-2 text-sm text-[#5777D0]">FurSphere showcase</span>
+            <h1 className="mt-8 text-3xl font-semibold md:text-5xl">You’ve explored the questionnaire!</h1>
+            <p className="mt-6 text-lg leading-relaxed">This preview lets you experience FurSphere’s original pet personality questionnaire. Your answers and photo stay in this browser tab and are cleared when you refresh.</p>
+            <p className="mt-4 leading-relaxed text-[#667085]">Personalized AI reports, accounts, and email delivery are unavailable in this showcase. No personality result has been generated.</p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <button onClick={handleBack} className="rounded-full border border-[#5777D0] px-6 py-3">Review answers</button>
+              <Link href="/" className="rounded-full bg-[#5777D0] px-6 py-3 text-white">Back to FurSphere</Link>
+            </div>
+          </section>
+        )}
+      </main>
     </div>
-    {/* desktop header */}
-    <div className={`${(step === 0 && part1 === false) && (result1 === false && result2 === false && result3 === false) || (showUserProfile === true) ? 'block' : 'hidden md:flex'}`}>
-      <Header setShowUserProfile={setShowUserProfile} showUserProfile={showUserProfile}/>
-    </div>
-
-    {showUserProfile && 
-    <motion.div
-    className="fixed  z-[5] bg-white  mt-[56px] md:mt-[100px] h-[calc(100svh)] md:h-[calc(100vh)] mx-auto w-full "
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -10 }}
-    transition={{ duration: 0.3 }}
-    >
-    <UserProfile 
-    setResult1={setResult1}
-    setShowPetProfile={setShowUserProfile} 
-    handleNext={handleNext} 
-    handleBack={handleBack} 
-    step={step} 
-    setStep={setStep} 
-    surveyData={surveyData} 
-    updateAnswer={updateAnswer}
-    setIsFromUserProfile={setIsFromUserProfile}
-    isFromUserProfile={isFromUserProfile}
-    />
-    </motion.div>
-    }
-    {/* progress bar */}
-    {(part1 === false && part2 === false && step !== 0 && result1 === false && result2 === false && result3 === false && showUserProfile === false && showEmail === false) && <ProgressBar step={step}/>}
-
-      {basicInfoPages.map(({ step: pageStep, key, Component }) => (
-        (part1 === false && part2 === false && step === pageStep && result1 === false && result2 === false && result3 === false && (
-          <motion.div
-            key={key}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Component
-              handleNext={handleNext}
-              handleBack={handleBack}
-              step={step}
-              setStep={setStep}
-              surveyData={surveyData}
-              updateAnswer={updateAnswer}
-              setPart1={setPart1}
-              setPart2={setPart2}
-              part1={part1}
-            />
-          </motion.div>
-        )
-       )))}
-       
-      {part1 && 
-      <motion.div
-        key="part1" 
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.3 }}
-      >
-      <Part1 handleNext={handleNext} handleBack={handleBack} step={step} setStep={setStep} surveyData = {surveyData} updateAnswer = {updateAnswer} setPart1={setPart1}/>
-      </motion.div>
-      } 
-
-      {part2 && 
-      <motion.div
-        key="part2" 
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.3 }}
-      >
-      <Part2 handleNext={handleNext} handleBack={handleBack} step={step} setStep={setStep}  surveyData = {surveyData} updateAnswer = {updateAnswer} setPart2={setPart2}/>
-      </motion.div>
-      } 
-
-      {[5,6,7,8,9,10,11,12,13,14,15,16,17].map((pageStep) => 
-        (part1 === false && part2 === false && result1 === false && result2 === false && result3 === false && showUserProfile === false && step === pageStep && (
-          <motion.div
-            key={`page${pageStep}`}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            {(() => {
-              const PageComponent = require(`../components/mbti/behavioral_quiz/question${pageStep - 4}`).default;
-              return <PageComponent 
-                handleNext={handleNext} 
-                handleBack={handleBack} 
-                handleSkip={handleSkip}
-                step={step} 
-                setStep={setStep} 
-                surveyData={surveyData} 
-                updateAnswer={updateAnswer}
-                aiResult = {aiResult}
-                setAiResult = {setAiResult}
-                setResult1 = {setResult1}
-                setResult2 = {setResult2}
-                setResult3 = {setResult3}
-                isLoading={isLoading}
-                setIsLoading={(value: boolean) => {
-                    console.log('Setting isLoading to:', value);
-                    setIsLoading(value);
-                }}
-                showBanner2 = {showBanner2}
-                setShowBanner2 = {setShowBanner2}
-                showEmail={showEmail}
-                showSignup={showSignup}
-                showLogin={showLogin}
-                setShowEmail={setShowEmail}
-                setShowSignup={setShowSignup}
-                setShowLogin={setShowLogin}
-          
-              />;
-            })()}
-          </motion.div>
-        )
-      ))}
-
-
-    
-      
-        
-        <AnimatePresence mode="wait">
-        {result1 && (
-        <motion.div
-          key="result1" 
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ 
-            duration: 0.5,
-            ease: "easeOut"
-          }}
-        >
-          <Result1 
-            handleNext={handleNext}
-            handleBack={handleBack}
-            step={step}
-            setStep={setStep}
-            updateAnswer={updateAnswer}
-            setResult1={setResult1} 
-            setResult2={setResult2} 
-            setResult3={setResult3}
-            aiResult={aiResult}
-            surveyData={surveyData}
-            setDownload={setDownload}
-            setDownloadPage1={setDownloadPage1}
-            isFromUserProfile={isFromUserProfile}
-            setIsFromUserProfile={setIsFromUserProfile}
-          />
-        </motion.div>
-  
-      )}
-     
-       {result2 && (
-     
-        <motion.div
-          key="result2"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ 
-            duration: 0.5,
-            ease: "easeOut"
-          }}
-        >
-          <Result2 
-            setResult1={setResult1} 
-            setResult2={setResult2} 
-            setResult3={setResult3}
-            aiResult={aiResult}
-            surveyData={surveyData}
-            setDownload={setDownload}
-            isFromUserProfile={isFromUserProfile}
-            setIsFromUserProfile={setIsFromUserProfile}
-          />
-        </motion.div>
-
-      )}
-     
-      {result3 && (
-       
-        <motion.div
-          key="result3"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ 
-            duration: 0.5,
-            ease: "easeOut"
-          }}
-        >
-          <Result3 
-            setResult1={setResult1} 
-            setResult2={setResult2} 
-            setResult3={setResult3}
-            aiResult={aiResult}
-            surveyData={surveyData}
-            setDownload={setDownload}
-            isFromUserProfile={isFromUserProfile}
-            setIsFromUserProfile={setIsFromUserProfile}
-          />
-        </motion.div>
-        
-      )}
-      </AnimatePresence>
-
-      <AnimatePresence mode="wait">
-      {download && (
-        <Download
-          step={step}
-          setStep={setStep}
-          setDownload={setDownload}
-          download={download}
-          setPart1={setPart1}
-          result1={result1}
-          result2={result2}
-          result3={result3}
-          setResult1={setResult1}
-          setResult2={setResult2}
-          setResult3={setResult3}
-          showEmail={showEmail}
-          showSignup={showSignup}
-          showLogin={showLogin}
-          loading={isLoading}
-          setShowEmail={setShowEmail}
-          setShowSignup={setShowSignup}
-          setShowLogin={setShowLogin}
-          setLoading={setIsLoading}
-          aiResult={aiResult}
-          setAiResult={setAiResult}
-          surveyData={surveyData}
-          isFromUserProfile={isFromUserProfile}
-          setIsFromUserProfile={setIsFromUserProfile}
-          setPart2={setPart2}
-        />
-      )}
-      </AnimatePresence>
-
-      
-      
-
-
-      
-    </div> 
-    )}
-
-</>
-
   );
-};
-
-export default PetMBTIFlow;
+}

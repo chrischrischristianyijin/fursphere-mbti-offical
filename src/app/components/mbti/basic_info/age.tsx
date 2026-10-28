@@ -24,7 +24,7 @@ interface AgeProps {
 
 const Age: React.FC<AgeProps> = ({ handleNext, handleBack, step, setStep, surveyData, updateAnswer }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedAge, setSelectedAge] = useState<string>('');
+  const [selectedAge, setSelectedAge] = useState<string>(surveyData.pet_info.PetAge || '');
   const [tempAge, setTempAge] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState('');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -146,7 +146,7 @@ const Age: React.FC<AgeProps> = ({ handleNext, handleBack, step, setStep, survey
                     {surveyData.pet_info.PetAge || 'Age'}
                   </span>
                   <Image 
-                    src="/Vector 2.svg"
+                    src="/fursphere-mbti-offical/Vector 2.svg"
                     alt="dropdown arrow"
                     width={12}
                     height={9}
@@ -252,7 +252,7 @@ const Age: React.FC<AgeProps> = ({ handleNext, handleBack, step, setStep, survey
                     }}
                   />
                   <Image 
-                    src="/Vector 2.svg"
+                    src="/fursphere-mbti-offical/Vector 2.svg"
                     alt="dropdown arrow"
                     width={10}
                     height={6}

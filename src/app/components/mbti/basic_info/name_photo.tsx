@@ -1,11 +1,11 @@
-'use client'; 
+'use client';
 import React, { useEffect, useState } from 'react';
 import ImageUpload from '../ImageUpload';
 import { SurveyData } from '@/app/types/survey';
 
 
 interface NamePhotoProps {
-    handleNext: () => void; 
+    handleNext: () => void;
     handleBack: () => void;
     surveyData: SurveyData;
     step: number;
@@ -16,17 +16,17 @@ interface NamePhotoProps {
 
 const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, setStep, surveyData, updateAnswer, setPart2  }) => {
   const [showBanner, setShowBanner] = useState(true);
-  
+
   const handleCloseBanner = () => {
     setShowBanner(false);
   }
 
 
   const handleNextPage5 = () => {
-    
+
     if (surveyData.pet_info.PetName && surveyData.pet_info.PetPhoto) {
       setPart2(true);
-    } 
+    }
   };
 
   const handleSkip = () => {
@@ -45,18 +45,12 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
         {showBanner && (
 
         <div className=" h-[100px] md:h-[80px] w-full bg-[#FEF0C7] flex items-center justify-center">
-          
+
           <div className=" mx-auto w-[320px] md:w-[540px] flex flex-row items-center justify-between ">
             <div className="flex flex-col max-w-[289px] md:max-w-[450px] gap-[10px]">
               <span className="max-w-[289px] md:max-w-[450px] text-[14px] text-[#717680] leading-[16.94px]">
-                A name and image help us create a more personalized result poster for you, but feel free to skip if you're not comfortable!
+                Optional: try a name and photo preview. Your photo stays in this browser tab and is never uploaded.
               </span>
-              <a
-                // href="#sample" 
-                className=" text-[14px] text-[#5777D0] underline hover:opacity-80 leading-[16.94px]"
-              >
-                View Sample
-              </a>
             </div>
 
             <button
@@ -83,7 +77,7 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
       <div className=" flex flex-col w-[320px] md:w-[540px] mx-auto ">
         <label
           className= {`
-            ${showBanner ? 'mt-[40px] md:mt-[45px]' : 'mt-[40px] md:mt-[85px]'} 
+            ${showBanner ? 'mt-[40px] md:mt-[45px]' : 'mt-[40px] md:mt-[85px]'}
             text-[16px] md:text-[18px]
             font-[Inter]
             font-[400]
@@ -97,8 +91,8 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
           type="text"
           placeholder="Please enter a name"
           className="
-            w-[100%] 
-            md:w-[540px] 
+            w-[100%]
+            md:w-[540px]
             md:h-[44px]
             mt-[20px]
             py-[12px] pl-[12px] pr-[130px]
@@ -133,10 +127,10 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
 
       </div>
 
-      <div className= 
-      {` absolute ${showBanner ? 'max-md:bottom-[48px] md:top-[586px]' : 'max-md:bottom-[48px] md:top-[546px]'}   
+      <div className=
+      {` absolute ${showBanner ? 'max-md:bottom-[48px] md:top-[586px]' : 'max-md:bottom-[48px] md:top-[546px]'}
        left-0 right-0 mx-auto w-[320px] md:w-[540px] h-[44px] flex justify-between `}>
-        <button 
+        <button
                 className="w-[44px] h-[44px] rounded-[22px] bg-[#D1D7EF] flex items-center justify-center md:w-[132px] md:p-0"
                 onClick={handleBack}
               >
@@ -162,7 +156,7 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
           <span className="font-semibold">Skip</span>
         </button>
 
-        <button 
+        <button
             className={`w-[44px] h-[44px] rounded-[22px] flex items-center justify-center md:w-[101px] md:p-0
               ${surveyData.pet_info.PetName && surveyData.pet_info.PetPhoto ? 'bg-[#5777D0]' : 'bg-[#C3C3C3]'}`}
             onClick={handleNextPage5}
