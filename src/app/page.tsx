@@ -18,6 +18,7 @@ export default function Home() {
         <div className="overflow-x-auto bg-[#E8EBF6] px-6 py-3 text-center text-sm text-[#27355D]">
           <p className="flex w-max min-w-full items-center justify-center gap-x-3 whitespace-nowrap">
             <strong>Interactive showcase.</strong>
+            <span>Original domain has expired.</span>
             <span>Original source code:</span>
             <a href="https://github.com/JasonKeyiL/fursphere-mbti-offical/tree/main" target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-2 hover:text-[#5777D0]">Frontend (main)</a>
             <span aria-hidden="true">·</span>
